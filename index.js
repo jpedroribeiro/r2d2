@@ -2,6 +2,7 @@
 import google from 'googleapis';
 import key from 'R2D2-c021b8657369.json'; // Create a new project on Google Developer Console to get your credentials
 import ga from 'ga_viewid.json'; // Go to the Admin panel in Google Analytics > View > View Settings > View ID
+import {aggregator} from './data-aggregator.js'
 
 let client,
 	config,
@@ -10,6 +11,7 @@ let client,
 
 client = new google.auth.JWT(key.client_email, null, key.private_key, ['https://www.googleapis.com/auth/analytics.readonly'], null);
 
+// Config should not be changed or it might affect the Aggregator script
 config = {
 	'auth': client,
 	'ids': ga.view_id,
@@ -27,6 +29,8 @@ queryData = function (analytics) {
 			return;
 		}
 		// console.log(JSON.stringify(response, null, 4));
+
+		aggregator(response);
 		
 		// TODO
 		// #1 group
