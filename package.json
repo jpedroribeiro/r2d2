@@ -1,0 +1,22 @@
+{
+  "name": "r2d2",
+  "version": "1.0.0",
+  "description": "Google Analytics Reporter",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "google",
+    "analytics"
+  ],
+  "author": "J. Pedro Ribeiro",
+  "license": "ISC",
+  "dependencies": {
+    "babel-preset-es2015": "^6.5.0",
+    "googleapis": "^2.1.7"
+  },
+  "devDependencies": {
+    "babel-cli": "^6.5.1"
+  }
+}
