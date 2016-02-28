@@ -68,7 +68,7 @@ function dealWithSafari(data) {
 		}
 	});
 
-	// TODO HERE: separate by version
+	// TODO HERE: dynamically separate by version
 
 	return {
 		'data': rest,
@@ -82,26 +82,25 @@ export function aggregator (rawdata) {
 	let data = rawdata.rows,
 		tempData,
 		chromeCount,
-		firefoxCount;
+		firefoxCount,
+		safariCountObject;
 
 	// Chrome
 	tempData = dealWithChrome(data);
 	chromeCount = tempData.browser;
 	data = tempData.data;
+	console.log('Chrome: ', chromeCount);
 
 	// Firefox
 	tempData = dealWithFirefox(data);
 	firefoxCount = tempData.browser;
 	data = tempData.data;
+	console.log('Firefox: ', firefoxCount);
 
 	// Safari
-	tempData = dealWithFirefox(data);
-	firefoxCount = tempData.browser;
-	data = tempData.data;
-
-	console.log(tempData.data);
-
-
-
+	// tempData = dealWithSafari(data);
+	// safariCountObject = tempData.browser;
+	// data = tempData.data;
+console.log(data);
 	
 }
