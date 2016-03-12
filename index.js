@@ -45,6 +45,7 @@ client.authorize(function (err, tokens) {
 		console.log(err);
 		return;
 	}
+	// No errors found, we can do our query
 	let analytics = google.analytics('v3');
 	queryData(analytics);
 });
