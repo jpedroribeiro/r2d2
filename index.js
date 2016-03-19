@@ -1,4 +1,5 @@
 // Require modules
+import clc from 'cli-color';
 import google from 'googleapis';
 import config from './config.json';
 import {aggregator} from './data-aggregator.js'
@@ -22,12 +23,15 @@ query = {
 };
 
 queryData = function (analytics) {
-	let aggregated;
+	let aggregated, temp;
+
 	analytics.data.ga.get(query, function (err, response){
 		if (err) {
 			console.log(err);
 			return;
 		}
+
+		process.stdout.write(clc.reset);
 
 		// Aggregate data
 		aggregated = aggregator(response);
@@ -55,8 +59,9 @@ queryData = function (analytics) {
 		}
 
 		// "Others"
+		console.log('Others:');
 		for (let browser in aggregated.others.count) {
-			console.log(`${browser}: ${aggregated.others.count[browser]} (${Math.round(aggregated.others.count[browser]/aggregated.total*100)}%)`);
+			console.log(`| ${browser}: ${aggregated.others.count[browser]} (${Math.round(aggregated.others.count[browser]/aggregated.total*100)}%)`);
 		}
 		
 		// TODO
