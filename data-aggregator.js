@@ -136,7 +136,7 @@ function dealWithIE(data) {
 	data.forEach(function (item, index) {
 		if (item[0].indexOf('Internet Explorer') >= 0) {
 			// Separate by main version number
-			let version = item[1].charAt(0);
+			let version = item[1].substr(0, item[1].indexOf('.'));
 
 			// Treat version 8 and below as one group
 			if (version <= 8) {
