@@ -13,14 +13,14 @@ Others: Everything else. Vendor name and count number.
 
 function dealWithChrome (data) {
 	let browser = [],
-		browserCount = 0,
+		count = 0,
 		rest = [];
 
 	// Separate Chrome from main list
 	data.forEach(function (item, index) {
 		if (item[0] === 'Chrome' && item[2] !== 'iOS') {
 			browser.push(item);
-			browserCount = browserCount + parseInt(item[3]);
+			count = count + parseInt(item[3]);
 		} else {
 			rest.push(item);
 		}
@@ -28,22 +28,22 @@ function dealWithChrome (data) {
 
 	return {
 		'data': rest,
-		'count': browserCount,
-		'browser': browser
+		'count': count,
+		'entries': browser
 	};
 }
 
 
 function dealWithFirefox(data) {
 	let browser = [],
-		browserCount = 0,
+		count = 0,
 		rest = [];
 
 	// Separate Firefox from main list
 	data.forEach(function (item, index) {
 		if (item[0] === 'Firefox') {
 			browser.push(item);
-			browserCount = browserCount + parseInt(item[3]);
+			count = count + parseInt(item[3]);
 		} else {
 			rest.push(item);
 		}
@@ -51,15 +51,15 @@ function dealWithFirefox(data) {
 
 	return {
 		'data': rest,
-		'count': browserCount,
-		'browser': browser
+		'count': count,
+		'entries': browser
 	};
 }
 
 
 function dealWithSafari(data) {
 	let browser = {},
-		browserCount = {},
+		count = {},
 		rest = [];
 
 	// Separate Safari from main list
@@ -85,10 +85,10 @@ function dealWithSafari(data) {
 			browser[version].push(item);
 
 			// Adds to count
-			if (browserCount[version] === undefined){
-				browserCount[version] = parseInt(item[3]);
+			if (count[version] === undefined){
+				count[version] = parseInt(item[3]);
 			} else {
-				browserCount[version] = browserCount[version] + parseInt(item[3]);	
+				count[version] = count[version] + parseInt(item[3]);	
 			}
 			
 		} else {
@@ -98,22 +98,22 @@ function dealWithSafari(data) {
 
 	return {
 		'data': rest,
-		'count': browserCount,
-		'browser': browser
+		'count': count,
+		'entries': browser
 	};
 }
 
 
 function dealWithEdge(data) {
 	let browser = [],
-		browserCount = 0,
+		count = 0,
 		rest = [];
 
 	// Separate Firefox from main list
 	data.forEach(function (item, index) {
 		if (item[0] === 'Edge') {
 			browser.push(item);
-			browserCount = browserCount + parseInt(item[3]);
+			count = count + parseInt(item[3]);
 		} else {
 			rest.push(item);
 		}
@@ -121,15 +121,15 @@ function dealWithEdge(data) {
 
 	return {
 		'data': rest,
-		'count': browserCount,
-		'browser': browser
+		'count': count,
+		'entries': browser
 	};
 }
 
 
 function dealWithIE(data) {
 	let browser = {},
-		browserCount = {},
+		count = {},
 		rest = [];
 
 	// Separate Safari from main list
@@ -150,10 +150,10 @@ function dealWithIE(data) {
 			browser[version].push(item);
 
 			// Adds to count
-			if (browserCount[version] === undefined){
-				browserCount[version] = parseInt(item[3]);
+			if (count[version] === undefined){
+				count[version] = parseInt(item[3]);
 			} else {
-				browserCount[version] = browserCount[version] + parseInt(item[3]);	
+				count[version] = count[version] + parseInt(item[3]);	
 			}
 			
 		} else {
@@ -163,15 +163,15 @@ function dealWithIE(data) {
 
 	return {
 		'data': rest,
-		'count': browserCount,
-		'browser': browser
+		'count': count,
+		'entries': browser
 	};
 }
 
 
 function dealWithOthers(data) {
 	let browser = {},
-		browserCount = {};
+		count = {};
 
 	data.forEach(function (item, index) {
 		// Separate browser by main vendor
@@ -184,16 +184,16 @@ function dealWithOthers(data) {
 		browser[vendor].push(item);
 
 		// Adds to count
-		if (browserCount[vendor] === undefined){
-			browserCount[vendor] = parseInt(item[3]);
+		if (count[vendor] === undefined){
+			count[vendor] = parseInt(item[3]);
 		} else {
-			browserCount[vendor] = browserCount[vendor] + parseInt(item[3]);	
+			count[vendor] = count[vendor] + parseInt(item[3]);	
 		}
 	});
 
 	return {
-		'count': browserCount,
-		'browser': browser
+		'count': count,
+		'entries': browser
 	};
 }
 
@@ -204,53 +204,27 @@ export function aggregator (rawdata) {
 	const total = rawdata.totalsForAllResults[Object.keys(rawdata.totalsForAllResults)];
 
 	let data = rawdata.rows,
-		tempData,
-		chromeCount,
-		firefoxCount,
-		safariCountObject,
-		edgeCount,
-		ieCountObject,
-		othersCountObject;
+		chrome,
+		firefox,
+		safari,
+		edge,
+		ie,
+		others;
 
-	// Chrome
-	tempData = dealWithChrome(data);
-	chromeCount = tempData.count;
-	data = tempData.data;
-	console.log(`Chrome: ${chromeCount}`);
+	chrome = dealWithChrome(data);
+	firefox = dealWithFirefox(chrome.data);
+	safari = dealWithSafari(firefox.data);
+	edge = dealWithEdge(safari.data);
+	ie = dealWithIE(edge.data);
+	others = dealWithOthers(ie.data);
 
-	// Firefox
-	tempData = dealWithFirefox(data);
-	firefoxCount = tempData.count;
-	data = tempData.data;
-	console.log(`Firefox: ${firefoxCount}`);
-
-	// Safari
-	tempData = dealWithSafari(data);
-	safariCountObject = tempData.count;
-	data = tempData.data;
-	for (let key in safariCountObject){
-		console.log(`Safari ${key}: ${safariCountObject[key]}`);
-	};
-
-	// Edge
-	tempData = dealWithEdge(data);
-	edgeCount = tempData.count;
-	data = tempData.data;
-	console.log(`Edge: ${edgeCount}`);
-
-	// Internet Explorer
-	tempData = dealWithIE(data);
-	ieCountObject = tempData.count;
-	data = tempData.data;
-	for (let key in ieCountObject){
-		console.log(`IE ${key}: ${ieCountObject[key]}`);
-	};
-
-	// Others
-	tempData = dealWithOthers(data);
-	othersCountObject = tempData.count;
-	data = tempData.data;
-	for (let key in othersCountObject){
-		console.log(`${key}: ${othersCountObject[key]}`);
+	return {
+		total,
+		chrome,
+		firefox,
+		safari,
+		edge,
+		ie,
+		others,
 	};
 }

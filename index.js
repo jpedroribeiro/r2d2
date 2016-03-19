@@ -22,17 +22,45 @@ query = {
 };
 
 queryData = function (analytics) {
+	let aggregated;
 	analytics.data.ga.get(query, function (err, response){
 		if (err) {
 			console.log(err);
 			return;
 		}
-		// console.log(JSON.stringify(response, null, 4));
 
-		aggregator(response);
+		// Aggregate data
+		aggregated = aggregator(response);
+
+		// "Total"
+		console.log(`Total: ${aggregated.total} (100%)`);
+
+		// "Chrome"
+		console.log(`Chrome: ${aggregated.chrome.count} (${Math.round(aggregated.chrome.count/aggregated.total*100)}%)`);
+
+		// "Firefox"
+		console.log(`Firefox: ${aggregated.firefox.count} (${Math.round(aggregated.firefox.count/aggregated.total*100)}%)`);
+
+		// "Safari"
+		for (let browser in aggregated.safari.count) {
+			console.log(`Safari ${browser}: ${aggregated.safari.count[browser]} (${Math.round(aggregated.safari.count[browser]/aggregated.total*100)}%)`);
+		}
+
+		// "Edge"
+		console.log(`Edge: ${aggregated.edge.count} (${Math.round(aggregated.edge.count/aggregated.total*100)}%)`);
+
+		// "IE"
+		for (let browser in aggregated.ie.count) {
+			console.log(`IE ${browser}: ${aggregated.ie.count[browser]} (${Math.round(aggregated.ie.count[browser]/aggregated.total*100)}%)`);
+		}
+
+		// "Others"
+		for (let browser in aggregated.others.count) {
+			console.log(`${browser}: ${aggregated.others.count[browser]} (${Math.round(aggregated.others.count[browser]/aggregated.total*100)}%)`);
+		}
 		
 		// TODO
-		// #1 group
+		// #1 group / order
 		// #2 pretty print (cli-color) with percentage and bar
 		// #3 live data? (current users)
 	});
