@@ -2,18 +2,18 @@
 
 **r2d2** is an nodejs application reading Google Analytics browser/devide data and displaying results. It's written using _ES2015_ standards.
 
-## Usage
-- Create a new project on [Google Developer Console] to get your credentials in JSON format, save it into your _node_modules_ folder;
-- Go to the Admin panel in Google Analytics > View > View Settings > View ID, and copy this value;
-- On index.js, replace the **key** path to your JSON;
-- Create a file called ga_viewid.json and paste your View ID there as a json object with view_id as key;
-- Run:
+## Config
+1. Create a new project on [Google Developer Console] to get your credentials in JSON format; 
+2. Copy **private_key** and **client_email** into **config.json**;
+3. Go to the Admin panel in Google Analytics > View > View Settings > View ID, and copy this value into the **view_id** inside **config.json**.
+
+## Running
 ```sh
 $ npm install
 babel-node index.js
 ```
 
-## Rules
+## Aggregation Rules
 WIP (TODO)
 ## Contact
 [@jpedroribeiro]

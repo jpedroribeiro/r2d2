@@ -1,20 +1,19 @@
 // Require modules
 import google from 'googleapis';
-import key from 'R2D2-c021b8657369.json'; // Create a new project on Google Developer Console to get your credentials
-import ga from 'ga_viewid.json'; // Go to the Admin panel in Google Analytics > View > View Settings > View ID
+import config from './config.json';
 import {aggregator} from './data-aggregator.js'
 
 let client,
-	config,
+	query,
 	queryData;
 
 
-client = new google.auth.JWT(key.client_email, null, key.private_key, ['https://www.googleapis.com/auth/analytics.readonly'], null);
+client = new google.auth.JWT(config.client_email, null, config.private_key, ['https://www.googleapis.com/auth/analytics.readonly'], null);
 
 // Config should not be changed or it might affect the Aggregator script
-config = {
+query = {
 	'auth': client,
-	'ids': ga.view_id,
+	'ids': config.view_id,
 	'dimensions': 'ga:browser,ga:browserVersion,ga:operatingSystem',
 	'metrics': 'ga:sessions',
 	'start-date': '30daysAgo',
@@ -23,7 +22,7 @@ config = {
 };
 
 queryData = function (analytics) {
-	analytics.data.ga.get(config, function (err, response){
+	analytics.data.ga.get(query, function (err, response){
 		if (err) {
 			console.log(err);
 			return;
