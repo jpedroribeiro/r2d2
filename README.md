@@ -14,7 +14,13 @@ babel-node index.js
 ```
 
 ## Aggregation Rules
-WIP (TODO)
+**Chrome**: All desktop, all mobile except iOS
+**Firefox**: Everything
+**Safari**: By version. Rounded by the major version number. Version 7 and below are grouped.
+**Edge**: Everything
+**IE**: By version. Rounded by the major version number. Version 8 and below are grouped.
+**Others**: Everything else. Vendor name and count number.
+
 ## Contact
 [@jpedroribeiro]
 
