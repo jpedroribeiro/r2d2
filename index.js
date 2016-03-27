@@ -1,5 +1,4 @@
 // Require modules
-import clc from 'cli-color';
 import google from 'googleapis';
 import config from './config.json';
 import {aggregator} from './data-aggregator.js'
@@ -63,11 +62,6 @@ queryData = function (analytics) {
 		for (let browser in aggregated.others.count) {
 			console.log(`| ${browser}: ${aggregated.others.count[browser]} (${Math.round(aggregated.others.count[browser]/aggregated.total*100)}%)`);
 		}
-		
-		// TODO
-		// #1 group / order
-		// #2 pretty print (cli-color) with percentage and bar
-		// #3 live data? (current users)
 	});
 }
 
