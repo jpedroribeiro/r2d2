@@ -30,8 +30,6 @@ queryData = function (analytics) {
 			return;
 		}
 
-		process.stdout.write(clc.reset);
-
 		// Aggregate data
 		aggregated = aggregator(response);
 
