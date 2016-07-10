@@ -37,28 +37,28 @@ queryData = function (analytics) {
 		console.log(`Total: ${aggregated.total} (100%)`);
 
 		// "Chrome"
-		console.log(`Chrome: ${aggregated.chrome.count} (${Math.round(aggregated.chrome.count/aggregated.total*100)}%)`);
+		console.log(`Chrome: ${aggregated.chrome.count} (${(aggregated.chrome.count/aggregated.total*100)}%)`);
 
 		// "Firefox"
-		console.log(`Firefox: ${aggregated.firefox.count} (${Math.round(aggregated.firefox.count/aggregated.total*100)}%)`);
+		console.log(`Firefox: ${aggregated.firefox.count} (${(aggregated.firefox.count/aggregated.total*100)}%)`);
 
 		// "Safari"
 		for (let browser in aggregated.safari.count) {
-			console.log(`Safari ${browser}: ${aggregated.safari.count[browser]} (${Math.round(aggregated.safari.count[browser]/aggregated.total*100)}%)`);
+			console.log(`Safari ${browser}: ${aggregated.safari.count[browser]} (${(aggregated.safari.count[browser]/aggregated.total*100)}%)`);
 		}
 
 		// "Edge"
-		console.log(`Edge: ${aggregated.edge.count} (${Math.round(aggregated.edge.count/aggregated.total*100)}%)`);
+		console.log(`Edge: ${aggregated.edge.count} (${(aggregated.edge.count/aggregated.total*100)}%)`);
 
 		// "IE"
 		for (let browser in aggregated.ie.count) {
-			console.log(`IE ${browser}: ${aggregated.ie.count[browser]} (${Math.round(aggregated.ie.count[browser]/aggregated.total*100)}%)`);
+			console.log(`IE ${browser}: ${aggregated.ie.count[browser]} (${(aggregated.ie.count[browser]/aggregated.total*100)}%)`);
 		}
 
 		// "Others"
 		console.log('Others:');
 		for (let browser in aggregated.others.count) {
-			console.log(`| ${browser}: ${aggregated.others.count[browser]} (${Math.round(aggregated.others.count[browser]/aggregated.total*100)}%)`);
+			console.log(`| ${browser}: ${aggregated.others.count[browser]} (${(aggregated.others.count[browser]/aggregated.total*100)}%)`);
 		}
 	});
 }

@@ -66,11 +66,26 @@ function dealWithSafari(data) {
 	data.forEach(function (item, index) {
 		if (item[0].indexOf('Safari') >= 0) {
 			// Separate by main version number
-			let version = item[1].charAt(0);
+			let version = item[1].substr(0, item[1].indexOf('.'));
 
-			// Treat '(in app)' as latest (9)
-			if (version.indexOf('(') > -1){
-				version = 9;
+			// Treat '(in app)' as web view
+			if (item[1].charAt(0).indexOf('(') > -1){
+				version = 'In app web view';
+			}
+
+			// Cleanup non standard versions
+			if (version === 600) {
+				version = '8';
+			}
+
+			if (version === 601) {
+				version = '9';
+			}
+			// TODO: other popular non standard versions?
+
+			// Treat other non standards as 7-
+			if (version.length >= 3) {
+				version = '7 or less';				
 			}
 
 			// Treat version 7 and below as one group
