@@ -68,11 +68,6 @@ function dealWithSafari(data) {
 			// Separate by main version number
 			let version = item[1].substr(0, item[1].indexOf('.'));
 
-			// Treat '(in app)' as web view
-			if (item[1].charAt(0).indexOf('(') > -1){
-				version = 'In app web view';
-			}
-
 			// Cleanup non standard versions
 			if (version === 600) {
 				version = '8';
@@ -83,8 +78,11 @@ function dealWithSafari(data) {
 			}
 			// TODO: other popular non standard versions?
 
-			// Treat other non standards as 7-
-			if (version.length >= 3) {
+			// Treat '(in app)' as web view
+			if (item[1] === '(not set)'){
+				version = 'In-app view';
+			} else if (version.length >= 3) {
+				// Treat other non standards as 7-
 				version = '7 or less';				
 			}
 
