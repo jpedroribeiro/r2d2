@@ -69,11 +69,11 @@ function dealWithSafari(data) {
 			let version = item[1].substr(0, item[1].indexOf('.'));
 
 			// Cleanup non standard versions
-			if (version === 600) {
+			if (version == 600) {
 				version = '8';
 			}
 
-			if (version === 601) {
+			if (version == 601) {
 				version = '9';
 			}
 			// TODO: other popular non standard versions?
